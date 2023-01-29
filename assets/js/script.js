@@ -58,7 +58,7 @@ $(document).ready(function () {
 
             // now we can use these coords within our openweather query string
 
-            const queryWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+            const queryWeatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
             console.log(queryWeatherURL);
             // lets make another ajax call inside to fetch the weather
@@ -69,7 +69,9 @@ $(document).ready(function () {
               dataType: "json",
               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             }).then((data) => {
-              console.log(data);
+              console.log("Retrieved weather data successfully: ", data);
+              // lets pass the data object to a function
+              displayWeather(data);
             });
           })
           .catch((error) => {
@@ -79,9 +81,29 @@ $(document).ready(function () {
           });
       };
 
-      // lets invoke the above function here
+      const displayWeather = (weather) => {
+        // lets create an empty array , where we will store a five day weather data
+
+        let fiveDayArr = [];
+
+        // lets extract the weather list array
+
+        let weatherList = weather.list;
+
+        console.log(weatherList);
+
+        // lets loop through this array and only return every 8th array
+        for (let i = 0; i < weatherList.length; i = i + 8) {
+          fiveDayArr.push(weatherList[i]);
+        }
+
+        console.log(fiveDayArr);
+      };
+
+      // lets invoke functions here
 
       getLatLng();
+      displayWeather();
     });
   };
 
