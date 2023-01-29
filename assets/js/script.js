@@ -15,54 +15,48 @@ $(document).ready(function () {
 
       event.preventDefault();
 
-      const coords = getLatLng(getCity());
+      // lets create a function to get the city name
 
-      console.log(coords);
+      const getCity = () => {
+        let city = "";
+
+        city = $("#search-input").val().trim();
+
+        return city;
+      };
+
+      // lets create a function to return the latitude and longitude
+
+      const getLatLng = () => {
+        const city = getCity();
+
+        // lets create the queryURLGeo from the api
+
+        const queryURLGeo = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+        // lets make the ajax call
+
+        $.ajax({
+          url: queryURLGeo,
+          method: "GET",
+          async: false,
+        })
+          .then((response) => {
+            console.log(response.coord);
+
+            if (response.cod === 400) throw new Error();
+          })
+          .catch((error) => {
+            console.error("Error occurred: ", error);
+
+            $(".form-message").text("Please enter a valid City name ! 😮");
+          });
+      };
+
+      // lets invoke the above function here
+
+      getLatLng();
     });
-  };
-
-  // lets create a function to get the city name
-
-  const getCity = () => {
-    let city = "";
-
-    city = $("#search-input").val().trim();
-
-    return city;
-  };
-
-  // lets create a function to return the latitude and longitude
-
-  const getLatLng = (cityName) => {
-    const city = cityName;
-
-    // lets create the queryURLGeo from the api
-
-    const queryURLGeo = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-
-    let coords;
-
-    // lets make the ajax call
-
-    $.ajax({
-      url: queryURLGeo,
-      method: "GET",
-      async: false,
-    })
-      .then((response) => {
-        console.log(response.coord);
-
-        if (response.cod === 400) throw new Error();
-
-        coords = response.coord;
-      })
-      .catch((error) => {
-        console.error("Error occurred: ", error);
-
-        $(".form-message").text("Please enter a valid City name ! 😮");
-      });
-
-    return coords;
   };
 
   // lets create a init function here
