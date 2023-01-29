@@ -39,12 +39,38 @@ $(document).ready(function () {
         $.ajax({
           url: queryURLGeo,
           method: "GET",
-          async: false,
+          dataType: "json",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         })
           .then((response) => {
-            console.log(response.coord);
+            // console.log(response.coord);
 
             if (response.cod === 400) throw new Error();
+
+            return response.coord;
+          })
+          .then((dataCoords) => {
+            console.log(dataCoords);
+
+            // lets use destructure here to extract the lon, lat coords
+
+            const { lon, lat } = dataCoords;
+
+            // now we can use these coords within our openweather query string
+
+            const queryWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+            console.log(queryWeatherURL);
+            // lets make another ajax call inside to fetch the weather
+
+            $.ajax({
+              url: queryWeatherURL,
+              method: "GET",
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            }).then((data) => {
+              console.log(data);
+            });
           })
           .catch((error) => {
             console.error("Error occurred: ", error);
