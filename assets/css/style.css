@@ -91,7 +91,7 @@ header h1 {
   color: currentColor;
 }
 
-.search-button {
+#search-button {
   background-color: var(--orange);
   font-size: 1rem;
   font-weight: bold;
@@ -101,7 +101,7 @@ header h1 {
   transition: background 0.3s ease-in-out;
 }
 
-.search-button:hover {
+#search-button:hover {
   background-color: var(--darkred);
 }
 
@@ -137,6 +137,10 @@ header h1 {
 
   .input-group {
     left: 75px;
+  }
+
+  .form-message {
+    text-align: center;
   }
 
   .search-history {
