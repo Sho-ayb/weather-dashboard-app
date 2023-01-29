@@ -1,0 +1,180 @@
+/* main root variables      */
+
+:root {
+  --bg_main: #2a3050;
+
+  --bg_second: #215c69;
+
+  --text_light: #fff;
+
+  --text_med: #53627c;
+
+  --text_dark: #1e2432;
+
+  --red: #ff1e42;
+
+  --darkred: #c3112d;
+
+  --orange: #ff8c00;
+}
+
+/*   reset the style file */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: normal;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+  background: var(--bg_main);
+  color: var(--text_light);
+}
+
+header h1 {
+  font-family: "Montserrat";
+  font-size: 3.5rem;
+  color: var(--text_light);
+}
+
+.date-text {
+  font-size: 1.7rem;
+  color: var(--darkred);
+}
+
+.todays-date {
+  font-size: 1.7rem;
+  color: var(--orange);
+}
+
+#section-search {
+  background-color: var(--bg_second);
+  margin-bottom: 1.9em;
+}
+
+.search-heading {
+  color: var(--darkred);
+}
+
+.search-paragraph {
+  padding: 0;
+  margin-top: 1.3em;
+  font-family: "Raleway:300";
+  font-size: 1.2rem;
+}
+
+.search-history-heading {
+  color: var(--darkred);
+}
+
+.form {
+  margin-top: 2.5em;
+}
+
+.section-form input::placeholder {
+  color: currentColor;
+}
+
+.search-button {
+  background-color: var(--orange);
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  padding: 15px 20px;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.search-button:hover {
+  background-color: var(--darkred);
+}
+
+.form-message {
+  font-family: "Raleway:300";
+  font-size: 1.2rem;
+  max-width: 450px;
+  min-height: 40px;
+}
+
+.search-history {
+  margin-bottom: 2.7em;
+}
+
+.weather-list .weather-item {
+  background-color: aliceblue;
+  color: var(--text_dark);
+  padding: 1.5em;
+  border-radius: 15px;
+}
+
+/* media styles  */
+
+@media screen and (max-width: 500px) {
+  .search-heading {
+    text-align: center;
+    font-size: 2.5rem;
+  }
+
+  .search-paragraph {
+    text-align: center;
+  }
+
+  .input-group {
+    left: 75px;
+  }
+
+  .search-history {
+    left: 75px;
+  }
+
+  .days {
+    text-align: center;
+  }
+
+  .search-history-heading {
+    font-size: 1.9rem;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .city-name {
+    text-align: center;
+    font-size: 1.7rem;
+  }
+
+  .date {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5em;
+  }
+
+  .weather-data {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .weather-data span {
+    margin-bottom: 0.5em;
+  }
+}
