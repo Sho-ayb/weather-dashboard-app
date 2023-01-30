@@ -31,10 +31,15 @@ button {
   cursor: pointer;
 }
 
-img {
-  display: block;
+figure {
+  display: flex;
   max-width: 100%;
   height: auto;
+}
+
+.city-icon {
+  justify-content: center;
+  width: 150px;
 }
 
 ul {
@@ -90,8 +95,17 @@ header h1 {
   margin-top: 2.5em;
 }
 
-.section-form input::placeholder {
+.form-input input::placeholder {
   color: currentColor;
+}
+
+.form-input {
+  border: 0;
+  border-radius: 5px;
+}
+
+.form-button {
+  margin-left: 0.5em;
 }
 
 .form-message {
@@ -131,7 +145,14 @@ header h1 {
   width: 255px;
 }
 
-.weather-list .weather-item {
+.weather-list-today .weather-item {
+  background-color: aliceblue;
+  color: var(--text_dark);
+  padding: 1.5em;
+  border-radius: 15px;
+}
+
+.weather-list-fourday .weather-item {
   background-color: aliceblue;
   color: var(--text_dark);
   padding: 1.5em;

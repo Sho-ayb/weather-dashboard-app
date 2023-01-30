@@ -3,6 +3,16 @@
 $(document).ready(function () {
   console.log("Document has loaded");
 
+  // lets use moment to format the date they way we want it
+
+  const now = moment();
+
+  const todaysDate = now.format("dddd, MMMM D");
+
+  $(".date-text").text(todaysDate);
+
+  // lets put todays date in to element
+
   // lets create global variables here
 
   const apiKey = "d0af7ceac9a3501bc47a8577610395a2";
@@ -10,12 +20,32 @@ $(document).ready(function () {
   // lets create a function to listen to the form event
 
   const main = () => {
+    // lets query select all the elements we need to present the weather forecast
+
+    // we need the div container of todays forecast
+
+    const weatherTodayEl = $(".weather-today");
+
+    // we need the element for the unordered list of todays forecast
+
+    const weatherListToday = $(".weather-list-today");
+
+    // we need the div container of fourday forecast
+
+    const weatherFourDay = $(".weather-fourday");
+
+    // we need the element for the unordered list of fourday forecast
+
+    const weatherListFourDay = $(".weather-list-fourday");
+
+    // the event listener on the search form button
+
     $("#search-button").on("click", function (event) {
       console.log("button clicked");
 
       event.preventDefault();
 
-      // lets create a function to get the city name
+      // lets create a function to get the city name from the form input
 
       const getCity = () => {
         let city = "";
@@ -28,6 +58,7 @@ $(document).ready(function () {
       // lets create a function to return the latitude and longitude
 
       const getLatLng = () => {
+        // lets pass the input value of form input to variable
         const city = getCity();
 
         // lets create the queryURLGeo from the api
@@ -45,7 +76,7 @@ $(document).ready(function () {
           .then((response) => {
             // console.log(response.coord);
 
-            if (response.cod === 400) throw new Error();
+            if (response.cod === "400") throw new Error();
 
             return response.coord;
           })
@@ -58,7 +89,7 @@ $(document).ready(function () {
 
             // now we can use these coords within our openweather query string
 
-            const queryWeatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+            const queryWeatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
             console.log(queryWeatherURL);
             // lets make another ajax call inside to fetch the weather
@@ -77,8 +108,14 @@ $(document).ready(function () {
           .catch((error) => {
             console.error("Error occurred: ", error);
 
-            $(".form-message").text("Please enter a valid City name ! 😮");
+            if (error.status === 404) {
+              $(".form-message").text("Please enter a valid City name ! 😮");
+            }
           });
+
+        // reset the form message back to empty here
+
+        $(".form-message").text(" ");
       };
 
       const displayWeather = (data) => {
@@ -90,7 +127,7 @@ $(document).ready(function () {
 
         let weatherList = data.list;
 
-        console.log("weather", data);
+        console.log("displayWeather", data);
 
         // lets loop through this array and only return every 8th array
         for (let i = 0; i < weatherList.length; i = i + 8) {
@@ -99,15 +136,63 @@ $(document).ready(function () {
 
         console.log(fiveDayArr);
 
+        // lets destructure the object props from the above array
+
+        const { main, weather, wind } = fiveDayArr[0];
+
+        // lets setup the list item markup on the todays forecast
+
+        // lets create the markup for todays forecast
+
+        const todaysMarkup = `
+            
+              
+          <li class="weather-item">
+            <h2 class="days" data-day="">Today</h2>
+            <h3 class="date">
+                <span>${todaysDate}</span>
+            </h3>
+            <h2 class="city-name" data-name="...">
+            <span>${data.city.name}</span>
+            <sup>${data.city.country}</sup>
+          </h2>
+          <figure>
+            <img class="city-icon" src="http://openweathermap.org/img/wn/${
+              weather[0].icon
+            }@4x.png" alt="${weather[0].description}" />
+            <figcaption>${weather[0].description}</figcaption>
+          </figure>
+          <h3 class="weather-data">
+            <span class="city-temp">Temp: ${Math.round(
+              main.temp
+            )}<sup>&#176;C</sup></span>
+            <span class="city-humid">Humid: ${main.humidity}</span>
+            <span class="city-wind">Wind: ${Math.round(wind.speed)}</span>
+          </h3>
+        </li>
+                    
+          `;
+
+        // lets create a list item
+
+        const li = todaysMarkup;
+
+        // and append it to the unordered list here
+
+        weatherListToday.append(todaysMarkup);
+
         // now that we have the five day array forecast, we need to build a list item markup
-        // lets first destructure the object props we need from the array of objects
+        // by loop through this array - starting the array @ 1 because we only need the other 4 objects to complete the five day forecast
 
-        const { main, name, sys, weather } = fiveDayArr;
+        for (let i = 1; i < fiveDayArr.length; i++) {
+          // lets first destructure the object props we need from the array of objects
+          const { main, weather, wind } = fiveDayArr[i];
 
-        console.log("main ", main);
+          console.log("main ", main, "weather ", weather, "wind ", wind);
+        }
       };
 
-      // lets invoke functions here
+      // lets invoke functions here in main()
 
       getLatLng();
       displayWeather();
@@ -117,10 +202,11 @@ $(document).ready(function () {
   // lets create a init function here
 
   const init = () => {
+    // this invokes the main function above
     main();
   };
 
-  // lets invoke init
+  // lets invoke init to run our application
 
   init();
 });
