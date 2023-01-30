@@ -90,7 +90,7 @@ $(document).ready(function () {
 
         let weatherList = weather.list;
 
-        console.log(weatherList);
+        console.log("weather", weather);
 
         // lets loop through this array and only return every 8th array
         for (let i = 0; i < weatherList.length; i = i + 8) {
