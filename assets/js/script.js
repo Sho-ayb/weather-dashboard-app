@@ -19,24 +19,26 @@ $(document).ready(function () {
 
   // lets create a function to listen to the form event
 
+  // lets query select all the elements we need to present the weather forecast
+
+  // we need the element for the unordered list of todays forecast
+
+  const weatherListToday = $(".weather-list-today");
+
+  // we need the element for the unordered list of fourday forecast
+
+  const weatherListFourDay = $(".weather-list-fourday");
+
+  // lets query select the weather item and remove it
+
+  const weatherItem = $(".weather-item");
+
+  // the main function gets weather data from the api and displays the card elements on page
+
   const main = () => {
-    // lets query select all the elements we need to present the weather forecast
+    // need this variable outside of getCity function to use later in displayWeather function
 
-    // we need the div container of todays forecast
-
-    const weatherTodayEl = $(".weather-today");
-
-    // we need the element for the unordered list of todays forecast
-
-    const weatherListToday = $(".weather-list-today");
-
-    // we need the div container of fourday forecast
-
-    const weatherFourDay = $(".weather-fourday");
-
-    // we need the element for the unordered list of fourday forecast
-
-    const weatherListFourDay = $(".weather-list-fourday");
+    let city = "";
 
     // the event listener on the search form button
 
@@ -48,9 +50,7 @@ $(document).ready(function () {
       // lets create a function to get the city name from the form input
 
       const getCity = () => {
-        let city = "";
-
-        city = $("#search-input").val().trim();
+        city = $("#search-input").val().trim().toLowerCase();
 
         return city;
       };
@@ -58,8 +58,8 @@ $(document).ready(function () {
       // lets create a function to return the latitude and longitude
 
       const getLatLng = () => {
-        // lets pass the input value of form input to variable
-        const city = getCity();
+        // lets pass the input value of form input to variable, returned all lowercase
+        city = getCity();
 
         // lets create the queryURLGeo from the api
 
@@ -102,7 +102,8 @@ $(document).ready(function () {
             }).then((data) => {
               console.log("Retrieved weather data successfully: ", data);
               // lets pass the data object to a function
-              displayWeather(data);
+              displayTodayWeather(data);
+              //   displayFourDayWeather(data);
             });
           })
           .catch((error) => {
@@ -118,27 +119,18 @@ $(document).ready(function () {
         $(".form-message").text(" ");
       };
 
-      const displayWeather = (data) => {
-        // lets create an empty array , where we will store a five day weather data
+      // lets create a separate function here to display the todays forecast in to correct section
 
-        let fiveDayArr = [];
-
+      const displayTodayWeather = (data) => {
         // lets extract the weather list array
 
         let weatherList = data.list;
 
-        console.log("displayWeather", data);
-
-        // lets loop through this array and only return every 8th array
-        for (let i = 0; i < weatherList.length; i = i + 8) {
-          fiveDayArr.push(weatherList[i]);
-        }
-
-        console.log(fiveDayArr);
+        console.log("displayWeather function", data);
 
         // lets destructure the object props from the above array
 
-        const { main, weather, wind } = fiveDayArr[0];
+        const { main, weather, wind } = weatherList[0];
 
         // lets setup the list item markup on the todays forecast
 
@@ -148,11 +140,11 @@ $(document).ready(function () {
             
               
           <li class="weather-item">
-            <h2 class="days" data-day="">Today</h2>
+            <h2 class="days">Today</h2>
             <h3 class="date">
                 <span>${todaysDate}</span>
             </h3>
-            <h2 class="city-name" data-name="...">
+            <h2 class="city-name" data-city-name="${data.city.name.toLowerCase()}">
             <span>${data.city.name}</span>
             <sup>${data.city.country}</sup>
           </h2>
@@ -168,10 +160,10 @@ $(document).ready(function () {
             )}<sup>&#176;C</sup></span>
             <span class="city-humid">Humid: ${main.humidity}</span>
             <span class="city-wind">Wind: ${Math.round(wind.speed)}</span>
-          </h3>
+            </h3>
         </li>
-                    
-          `;
+        
+        `;
 
         // lets create a list item
 
@@ -179,30 +171,39 @@ $(document).ready(function () {
 
         // and append it to the unordered list here
 
-        weatherListToday.append(todaysMarkup);
+        weatherListToday.append(li);
 
-        // now that we have the five day array forecast, we need to build a list item markup
-        // by loop through this array - starting the array @ 1 because we only need the other 4 objects to complete the five day forecast
-
-        for (let i = 1; i < fiveDayArr.length; i++) {
-          // lets first destructure the object props we need from the array of objects
-          const { main, weather, wind } = fiveDayArr[i];
-
-          console.log("main ", main, "weather ", weather, "wind ", wind);
-        }
+        // $(".weather-today").append(weatherListToday);
       };
 
-      // lets invoke functions here in main()
+      //   const displayFourDayWeather = (data) => {
+      //     // now that we have the five day array forecast, we need to build a list item markup
+      //     // by loop through this array - starting the array @ 1 because we only need the other 4 objects to complete the five day forecast
 
+      //     for (let i = 1; i < fiveDayArr.length; i++) {
+      //       // lets first destructure the object props we need from the array of objects
+      //       const { main, weather, wind } = fiveDayArr[i];
+
+      //       console.log("main ", main, "weather ", weather, "wind ", wind);
+      //     }
+      //   };
+
+      // lets invoke functions here in main()
       getLatLng();
-      displayWeather();
+      displayTodayWeather();
     });
+  };
+
+  // lets create a function to clear the html list items
+
+  const clearWeatherCards = () => {
+    weatherItem.remove();
   };
 
   // lets create a init function here
 
   const init = () => {
-    // this invokes the main function above
+    clearWeatherCards();
     main();
   };
 
