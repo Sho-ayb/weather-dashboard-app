@@ -81,16 +81,16 @@ $(document).ready(function () {
           });
       };
 
-      const displayWeather = (weather) => {
+      const displayWeather = (data) => {
         // lets create an empty array , where we will store a five day weather data
 
         let fiveDayArr = [];
 
         // lets extract the weather list array
 
-        let weatherList = weather.list;
+        let weatherList = data.list;
 
-        console.log("weather", weather);
+        console.log("weather", data);
 
         // lets loop through this array and only return every 8th array
         for (let i = 0; i < weatherList.length; i = i + 8) {
@@ -98,6 +98,13 @@ $(document).ready(function () {
         }
 
         console.log(fiveDayArr);
+
+        // now that we have the five day array forecast, we need to build a list item markup
+        // lets first destructure the object props we need from the array of objects
+
+        const { main, name, sys, weather } = fiveDayArr;
+
+        console.log("main ", main);
       };
 
       // lets invoke functions here

@@ -38,16 +38,16 @@
   </head>
 
   <body>
-    <header class="container-fluid text-center text-white p-5 weather-header">
-      <h1 class="header-title">Weather Dashboard</h1>
-      <p class="date-text p-4 text-center">
-        Date: <span class="todays-date"></span>
-      </p>
-    </header>
+    <div class="container-fluid">
+      <header class="text-center text-white p-5 weather-header">
+        <h1 class="header-title">Weather Dashboard</h1>
+        <p class="date-text p-4 text-center">
+          Date: <span class="todays-date"></span>
+        </p>
+      </header>
 
-    <!-- max-width for ultra wide resolutions -->
-    <section id="section-search">
-      <div class="container-fluid" style="max-width: 1400px">
+      <!-- max-width for ultra wide resolutions -->
+      <section id="section-search">
         <div class="row">
           <aside class="search-aside col-sm-4">
             <h1 class="search-heading">Search for a City</h1>
@@ -106,18 +106,31 @@
             </ul>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="section-weather">
-      <div class="container-fluid" style="max-width: 1400px">
+      <section id="section-weather">
         <div class="row">
-          <aside class="search-history col-sm-4">
+          <aside class="search-history-aside col-sm-4">
             <h2 class="search-history-heading" class="mt-1 h3 form-label">
               Your City Search History
             </h2>
 
-            <div class="search-history-list"></div>
+            <div class="search-history">
+              <ul class="search-history-list">
+                <li class="search-history-list-item">
+                  <button>Letchworth</button>
+                </li>
+                <li class="search-history-list-item">
+                  <button>Hitchin</button>
+                </li>
+                <li class="search-history-list-item">
+                  <button>Stevenage</button>
+                </li>
+                <li class="search-history-list-item">
+                  <button>Luton</button>
+                </li>
+              </ul>
+            </div>
           </aside>
 
           <div class="weather-fiveday col-lg-8">
@@ -144,8 +157,8 @@
             </ul>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>

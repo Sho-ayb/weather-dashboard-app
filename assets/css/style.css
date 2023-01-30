@@ -66,6 +66,8 @@ header h1 {
 #section-search {
   background-color: var(--bg_second);
   margin-bottom: 1.9em;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 .search-heading {
@@ -81,6 +83,7 @@ header h1 {
 
 .search-history-heading {
   color: var(--darkred);
+  margin-bottom: 1.5em;
 }
 
 .form {
@@ -89,6 +92,13 @@ header h1 {
 
 .section-form input::placeholder {
   color: currentColor;
+}
+
+.form-message {
+  font-family: "Raleway:300";
+  font-size: 1.2rem;
+  max-width: 450px;
+  min-height: 40px;
 }
 
 #search-button {
@@ -105,15 +115,20 @@ header h1 {
   background-color: var(--darkred);
 }
 
-.form-message {
-  font-family: "Raleway:300";
-  font-size: 1.2rem;
-  max-width: 450px;
-  min-height: 40px;
+#section-weather {
+  padding-top: 2em;
 }
 
-.search-history {
+.search-history-aside {
   margin-bottom: 2.7em;
+}
+
+.search-history-list-item {
+  margin-bottom: 0.5em;
+}
+
+.search-history-list-item button {
+  width: 255px;
 }
 
 .weather-list .weather-item {
@@ -140,6 +155,10 @@ header h1 {
   }
 
   .form-message {
+    text-align: center;
+  }
+
+  .search-history-list {
     text-align: center;
   }
 
