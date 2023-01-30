@@ -48,37 +48,63 @@
     <!-- max-width for ultra wide resolutions -->
     <section id="section-search">
       <div class="container-fluid" style="max-width: 1400px">
-        <div class="container-fluid py-3 col-sm-7">
-          <h1 class="search-heading">Search for a City</h1>
-          <p class="search-paragraph col-sm-3">
-            You can search for any City anywhere to get a five day forecast!
-          </p>
-          <form id="search-form" class="form">
-            <div class="form-inline form-group">
-              <div class="input-group">
-                <input
-                  class="form-input"
-                  type="text"
-                  id="search-input"
-                  placeholder="Enter a City name"
-                  aria-labelledby="form-heading"
-                  aria-controls="today forecast"
-                  autofocus
-                />
-                <div class="form-button">
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-lg"
-                    id="search-button"
-                    aria-label="submit search"
-                  >
-                    Search
-                  </button>
+        <div class="row">
+          <aside class="search-aside col-sm-4">
+            <h1 class="search-heading">Search for a City</h1>
+
+            <p class="search-paragraph">
+              You can search for any City anywhere to get a five day forecast!
+            </p>
+            <form id="search-form" class="form">
+              <div class="form-inline form-group">
+                <div class="input-group">
+                  <input
+                    class="form-input"
+                    type="text"
+                    id="search-input"
+                    placeholder="Enter a City name"
+                    aria-labelledby="form-heading"
+                    aria-controls="today forecast"
+                    autofocus
+                  />
+                  <div class="form-button">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg"
+                      id="search-button"
+                      aria-label="submit search"
+                    >
+                      Search
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-          <div class="form-message"></div>
+            </form>
+            <div class="form-message"></div>
+          </aside>
+          <div class="weather-today col-lg-8">
+            <ul class="weather-list">
+              <li class="weather-item">
+                <h2 class="days" data-day="">Today</h2>
+                <h3 class="date">
+                  <span>29/01/2023</span>
+                </h3>
+                <h2 class="city-name" data-name="...">
+                  <span>Letchworth Garden City</span>
+                  <sup>GB</sup>
+                </h2>
+                <figure>
+                  <img class="city-icon" src="" alt="" />
+                  <figcaption></figcaption>
+                </figure>
+                <h3 class="weather-data">
+                  <span class="city-temp">Temp: 4<sup>&#176;C</sup></span>
+                  <span class="city-humid">Humid: 17</span>
+                  <span class="city-wind">Wind: 33</span>
+                </h3>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -86,7 +112,7 @@
     <section id="section-weather">
       <div class="container-fluid" style="max-width: 1400px">
         <div class="row">
-          <aside class="search-history col-md-2">
+          <aside class="search-history col-sm-4">
             <h2 class="search-history-heading" class="mt-1 h3 form-label">
               Your City Search History
             </h2>
@@ -94,7 +120,7 @@
             <div class="search-history-list"></div>
           </aside>
 
-          <div class="weather-today col-lg-10">
+          <div class="weather-fiveday col-lg-8">
             <ul class="weather-list">
               <li class="weather-item">
                 <h2 class="days" data-day="">Today</h2>

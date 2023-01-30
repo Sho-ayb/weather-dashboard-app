@@ -143,16 +143,13 @@ header h1 {
     text-align: center;
   }
 
-  .search-history {
-    left: 75px;
-  }
-
   .days {
     text-align: center;
   }
 
   .search-history-heading {
     font-size: 1.9rem;
+    text-align: center;
   }
 
   .row {
