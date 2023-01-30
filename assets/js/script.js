@@ -132,6 +132,12 @@ $(document).ready(function () {
 
         const { main, weather, wind } = weatherList[0];
 
+        const listItemsArr = Array.from(
+          weatherListToday.querySelectorAll(".weather-item")
+        );
+
+        console.log(listItemsArr);
+
         // lets setup the list item markup on the todays forecast
 
         // lets create the markup for todays forecast
