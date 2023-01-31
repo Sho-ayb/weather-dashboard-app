@@ -9,10 +9,10 @@ $(document).ready(function () {
 
   const todaysDate = now.format("dddd, MMMM D");
 
-  // lets put todays date in to element
+  // putting todays date in to element
   $(".date-text").text(todaysDate);
 
-  // lets create global variables here
+  // global variables
 
   const apiKey = "d0af7ceac9a3501bc47a8577610395a2";
 
@@ -28,12 +28,16 @@ $(document).ready(function () {
 
   const weatherItem = $(".weather-item");
 
+  // lets query select the button list items and remove it from the DOM, when the page loads
+
+  const searchHistoryListItems = $(".search-history-list-item");
+
   // the main function gets weather data from the api and displays the card elements on page
 
   const main = () => {
     // need this variable outside of getCity function to use later in displayWeather function
 
-    let city = "";
+    let cityInput = "";
 
     // the event listener on the search form button
 
@@ -42,23 +46,65 @@ $(document).ready(function () {
 
       event.preventDefault();
 
+      // create an array to store the cities
+
+      //   let cities = JSON.parse();
+
       // lets create a function to get the city name from the form input
 
       const getCity = () => {
-        city = $("#search-input").val().trim().toLowerCase();
+        cityInput = $("#search-input").val().trim().toLowerCase();
 
-        return city;
+        return cityInput;
       };
+
+      // lets create a function to store search history within local storage
+
+      const storeSearchHistory = (city) => {
+        // we need to check if the arg passed to this function is an empty string
+
+        console.log(city);
+
+        if (city != "") {
+          console.log("cityInput variable is not empty: ", city);
+
+          const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+          const isCityValid = () => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("HEAD", queryURL, false);
+
+            xhttp.send();
+
+            if (xhttp.status == 404) {
+              return true;
+            }
+          };
+
+          if (!!isCityValid) {
+            // lets store the city to local storage
+
+            window.localStorage.setItem("city", JSON.stringify(city));
+          } else {
+            return;
+          }
+        }
+      };
+
+      // if the cityInput variable value is not empty we should store the result to local storage
+
+      storeSearchHistory(getCity());
 
       // lets create a function to return the latitude and longitude
 
       const getLatLng = () => {
         // lets pass the input value of form input to variable, returned all lowercase
-        city = getCity();
+        cityName = getCity();
 
         // lets create the queryURLGeo from the api
 
-        const queryURLGeo = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+        const queryURLGeo = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
         // lets make the ajax call
 
@@ -236,16 +282,21 @@ $(document).ready(function () {
     });
   };
 
+  // lets create a generateButtons function
+
+  const generateButtons = () => {};
+
   // lets create a function to clear the html list items
 
-  const clearWeatherCards = () => {
+  const clearHTMLContent = () => {
     weatherItem.remove();
+    searchHistoryListItems.remove();
   };
 
   // lets create a init function here
 
   const init = () => {
-    clearWeatherCards();
+    clearHTMLContent();
     main();
   };
 
