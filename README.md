@@ -23,7 +23,7 @@ For collecting weather information, this weather dashboard application will be u
 
 > ## Image of weather dashboard
 
-THE IMAGE GOES HERE
+![image of weather dashboard](./weather-dashboard-capture.gif)
 
 > ## Link to deployed application
 
