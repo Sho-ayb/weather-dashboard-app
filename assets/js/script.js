@@ -28,9 +28,13 @@ $(document).ready(function () {
 
   const weatherItem = $(".weather-item");
 
+  // lets query select the unordered list for search history
+
+  const searchHistoryUl = $(".search-history-list");
+
   // lets query select the button list items and remove it from the DOM, when the page loads
 
-  const searchHistoryListItems = $(".search-history-list-item");
+  const searchHistoryLi = $(".search-history-list-item");
 
   // the main function gets weather data from the api and displays the card elements on page
 
@@ -279,17 +283,50 @@ $(document).ready(function () {
       // lets invoke functions here in main()
       getLatLng();
     });
+
+    // inside main function
+
+    // lets create a generateButtons function
+
+    const generateButtons = () => {
+      // we need to check if the local storage is not empty, then loop through the objects and generate a button
+
+      const parsedCities = window.localStorage.getItem("cities")
+        ? JSON.parse(window.localStorage.getItem("cities"))
+        : [];
+
+      console.log(parsedCities);
+
+      if (parsedCities !== 0) {
+        for (let i = 0; parsedCities.length; i++) {
+          const cityName = parsedCities[i].name;
+
+          console.log(cityName);
+
+          // lets create the markup for the buttons
+
+          const btnMarkup = `
+            
+            <li class="search-history-list-item">
+                <button>${cityName}</button>
+            </li>
+           `;
+
+          const li = btnMarkup;
+
+          searchHistoryUl.append(li);
+        }
+      }
+    };
+
+    generateButtons();
   };
-
-  // lets create a generateButtons function
-
-  const generateButtons = () => {};
 
   // lets create a function to clear the html list items
 
   const clearHTMLContent = () => {
     weatherItem.remove();
-    searchHistoryListItems.remove();
+    searchHistoryLi.remove();
   };
 
   // lets create a init function here
