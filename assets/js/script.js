@@ -35,8 +35,6 @@ $(document).ready(function () {
   // the main function gets weather data from the api and displays the card elements on page
 
   const main = () => {
-    // need this variable outside of getCity function to use later in displayWeather function
-
     let cityInput = "";
 
     // the event listener on the search form button
@@ -45,10 +43,6 @@ $(document).ready(function () {
       console.log("button clicked");
 
       event.preventDefault();
-
-      // create an array to store the cities
-
-      //   let cities = JSON.parse();
 
       // lets create a function to get the city name from the form input
 
@@ -61,9 +55,10 @@ $(document).ready(function () {
       // lets create a function to store search history within local storage
 
       const storeSearchHistory = (city) => {
+        const cityRecord = window.localStorage.getItem("cities")
+          ? JSON.parse(window.localStorage.getItem("cities"))
+          : [];
         // we need to check if the arg passed to this function is an empty string
-
-        console.log(city);
 
         if (city != "") {
           console.log("cityInput variable is not empty: ", city);
@@ -85,7 +80,11 @@ $(document).ready(function () {
           if (!!isCityValid) {
             // lets store the city to local storage
 
-            window.localStorage.setItem("city", JSON.stringify(city));
+            console.log("inside isCityValid");
+
+            cityRecord.push({ name: city });
+
+            window.localStorage.setItem("cities", JSON.stringify(cityRecord));
           } else {
             return;
           }
