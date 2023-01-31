@@ -27,7 +27,7 @@ For collecting weather information, this weather dashboard application will be u
 
 > ## Link to deployed application
 
-THE LINK TO THE DEPLOYED APPLICATION GOES HERE
+[Link to deployed application](https://sho-ayb.github.io/weather-dashboard-app/)
 
 > ## Liscence
 
